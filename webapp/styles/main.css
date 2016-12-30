@@ -1,1 +1,16 @@
 /* Insert any additional CSS you need here */
+body {
+	font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;
+	font-size: 81.25%;
+	margin: 0;
+	min-width: 400px;
+	overflow-x: hidden;
+	overflow-y: scroll;
+	background-color: #f2f2f2;
+}
+
+.sidenav button {
+	width: 40px !important;
+	height: 40px !important;
+	padding: 8px !important;
+}

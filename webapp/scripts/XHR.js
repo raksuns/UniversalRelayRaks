@@ -1,23 +1,23 @@
 /* @flow weak */
 
-export function postXHR( url: string, jsondata: any, onSuccess, onFailure ) {
+export function postXHR(url: string, jsondata: any, onSuccess, onFailure) {
 
-  var xhr = new XMLHttpRequest()
-  xhr.open( 'POST', url )
-  xhr.setRequestHeader( 'Content-Type', 'application/json' )
+	var xhr = new XMLHttpRequest();
+	xhr.open('POST', url);
+	xhr.setRequestHeader('Content-Type', 'application/json');
 
-  xhr.onreadystatechange = function () {
+	xhr.onreadystatechange = function () {
 
-    if( xhr.readyState == 4 ) {
-      if( xhr.status == 200 ) {
+		if (xhr.readyState == 4) {
+			if (xhr.status == 200) {
 
-        onSuccess( xhr.responseText )
-      } else {
+				onSuccess(xhr.responseText)
+			} else {
 
-        onFailure( xhr.responseText )
-      }
-    }
-  }
+				onFailure(xhr.responseText)
+			}
+		}
+	};
 
-  xhr.send( JSON.stringify( jsondata ) )
+	xhr.send(JSON.stringify(jsondata))
 }

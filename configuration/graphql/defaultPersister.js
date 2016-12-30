@@ -1,4 +1,4 @@
-/* @flow */
+// @flow weak
 
 import Persister from '../../units/urb-persister-memory/graphql/PersisterMemory'
 
