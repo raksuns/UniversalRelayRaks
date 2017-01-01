@@ -16,7 +16,7 @@ import routes from '../configuration/webapp/routes'
 import schema from '../graphql/schema' // Schema for GraphQL server
 
 import i18n from './i18n-server';
-import { I18nextProvider } from 'react-i18next';
+import { loadNamespaces } from 'react-i18next';
 
 // Read environment
 require('dotenv').load();
@@ -42,13 +42,13 @@ export default(req, res, next, assetsPath, i18nServer, i18nClient) => {
 		else if (redirectLocation)
 			res.redirect(302, redirectLocation.pathname + redirectLocation.search);
 		else if (renderProps)
-			reunderOnServerCorrectRequest(req, res, next, assetsPath, renderProps, i18nServer, i18nClient);
+			reunderOnServerCorrectRequest(req, res, next, assetsPath, renderProps, i18nClient);
 		else
 			res.status(404).sendFile(httpError404FileName);
-	})
+	});
 }
 
-function reunderOnServerCorrectRequest(req, res, next, assetsPath, renderProps, i18nServer, i18nClient) {
+function reunderOnServerCorrectRequest(req, res, next, assetsPath, renderProps, i18nClient) {
 	// create individual object manager for each request
 	const objectManager = new ObjectManager();
 
@@ -68,6 +68,7 @@ function reunderOnServerCorrectRequest(req, res, next, assetsPath, renderProps, 
 				});
 
 				function render({data, props}) {
+
 					try {
 						// Setting up static, global navigator object to pass user agent to material-ui. Since the function is synchronous,
 						// it is OK to do so.
@@ -91,29 +92,30 @@ function reunderOnServerCorrectRequest(req, res, next, assetsPath, renderProps, 
 
 						console.log("props : " + JSON.stringify(props));
 						console.log("Isomorphic : " + JSON.stringify(IsomorphicRouter.render(props)));
-						// const component = (
-						// 	<I18nextProvider i18n={i18nServer}>
-						// 		<Provider store={store} key="provider">
-						// 			<ReduxAsyncConnect {...renderProps} />
-						// 		</Provider>
-						// 	</I18nextProvider>
-						// );
-						// Get the react output HTML
+						//const props2 = ;
 						const reactOutput = ReactDOMServer.renderToString(IsomorphicRouter.render(props));
-						console.log("reactOutput : " + JSON.stringify(reactOutput));
-						const helmet = Helmet.rewind();
+						// Get the react output HTML
+						loadNamespaces({ ...reactOutput, i18n: i18n }).then(()=> {
 
-						res.render(path.resolve(__dirname, 'renderOnServer.ejs'), {
-							preloadedData: JSON.stringify(data).replace(/\//g, '\\/'),
-							assetsPath: assetsPath,
-							reactOutput,
-							title: helmet.title,
-							meta: helmet.meta,
-							link: helmet.link,
-							isomorphicVars: isoVars,
-							NODE_ENV: process.env.NODE_ENV,
-							i18n: JSON.stringify(i18nClient)
+							console.log("reactOutput : " + JSON.stringify(reactOutput));
+
+							const helmet = Helmet.rewind();
+
+							res.render(path.resolve(__dirname, 'renderOnServer.ejs'), {
+								preloadedData: JSON.stringify(data).replace(/\//g, '\\/'),
+								assetsPath: assetsPath,
+								reactOutput,
+								title: helmet.title,
+								meta: helmet.meta,
+								link: helmet.link,
+								isomorphicVars: isoVars,
+								NODE_ENV: process.env.NODE_ENV,
+								i18n: JSON.stringify(i18nClient)
+							});
 						});
+						//const reactOutput = ReactDOMServer.renderToString();
+
+
 					} catch (err) {
 						serveFailure('error', res, 'renderOnServer render funcion failed', err)
 					}
