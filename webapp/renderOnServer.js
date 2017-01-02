@@ -4,6 +4,7 @@ import Helmet from 'react-helmet'
 import IsomorphicRouter from 'isomorphic-relay-router'
 import MobileDetect from 'mobile-detect'
 import path from 'path'
+import React from 'react';
 import ReactDOMServer from 'react-dom/server'
 import RelayLocalSchema from 'relay-local-schema'
 import {match} from 'react-router'
@@ -52,79 +53,70 @@ function reunderOnServerCorrectRequest(req, res, next, assetsPath, renderProps, 
 	// create individual object manager for each request
 	const objectManager = new ObjectManager();
 
-	getUserByCookie(objectManager, req, res)
-		.then(() => {
-			res.codeFoundriesInjected = {user: objectManager.getOneObject('User', {id: objectManager.getViewerUserId()})};
-		})
-		.then(() => {
-			try {
-				const networkLayer = new RelayLocalSchema.NetworkLayer({
-					schema,
-					rootValue: objectManager,
-					onError: (errors, request) => serveFailure('error', res, 'local network layer GraphQL failure', {
-						errors,
-						request
-					})
-				});
+	getUserByCookie(objectManager, req, res).then(() => {
+		res.codeFoundriesInjected = {user: objectManager.getOneObject('User', {id: objectManager.getViewerUserId()})};
+	}).then(() => {
+		try {
+			const networkLayer = new RelayLocalSchema.NetworkLayer({
+				schema,
+				rootValue: objectManager,
+				onError: (errors, request) => serveFailure('error', res, 'local network layer GraphQL failure', {
+					errors,
+					request
+				})
+			});
 
-				function render({data, props}) {
+			function render({data, props}) {
 
-					try {
-						// Setting up static, global navigator object to pass user agent to material-ui. Since the function is synchronous,
-						// it is OK to do so.
-						global.navigator = {userAgent: req.headers['user-agent']};
+				try {
+					// Setting up static, global navigator object to pass user agent to material-ui. Since the function is synchronous,
+					// it is OK to do so.
+					global.navigator = {userAgent: req.headers['user-agent']};
 
-						// Also, set width to emulate phone, tablet or desktop
-						const md = new MobileDetect(req.headers['user-agent']);
+					// Also, set width to emulate phone, tablet or desktop
+					const md = new MobileDetect(req.headers['user-agent']);
 
-						let innerWidth;
-						if (md.phone())
-							innerWidth = 700;// Will qualify as SMALL
-						else if (md.tablet())
-							innerWidth = 900; // Will qualify as MEDIUM
-						else
-							innerWidth = 1100; // Will qualify as LARGE
+					let innerWidth;
+					if (md.phone())
+						innerWidth = 700;// Will qualify as SMALL
+					else if (md.tablet())
+						innerWidth = 900; // Will qualify as MEDIUM
+					else
+						innerWidth = 1100; // Will qualify as LARGE
 
-						global.window = {innerWidth: innerWidth};
+					global.window = {innerWidth: innerWidth};
 
-						// Also set global location for the leftNav
-						global.location = {pathname: req.originalUrl};
+					// Also set global location for the leftNav
+					global.location = {pathname: req.originalUrl};
 
-						console.log("props : " + JSON.stringify(props));
-						console.log("Isomorphic : " + JSON.stringify(IsomorphicRouter.render(props)));
-						//const props2 = ;
-						const reactOutput = ReactDOMServer.renderToString(IsomorphicRouter.render(props));
-						// Get the react output HTML
-						loadNamespaces({ ...reactOutput, i18n: i18n }).then(()=> {
+					//console.log("props : " + JSON.stringify(props));
+					//console.log("Isomorphic : " + JSON.stringify(IsomorphicRouter.render(props)));
+					//const props2 = ;
+					const reactOutput = ReactDOMServer.renderToString(<IsomorphicRouter.RouterContext {...props} />);
+					// Get the react output HTML
 
-							console.log("reactOutput : " + JSON.stringify(reactOutput));
+					const helmet = Helmet.rewind();
 
-							const helmet = Helmet.rewind();
-
-							res.render(path.resolve(__dirname, 'renderOnServer.ejs'), {
-								preloadedData: JSON.stringify(data).replace(/\//g, '\\/'),
-								assetsPath: assetsPath,
-								reactOutput,
-								title: helmet.title,
-								meta: helmet.meta,
-								link: helmet.link,
-								isomorphicVars: isoVars,
-								NODE_ENV: process.env.NODE_ENV,
-								i18n: JSON.stringify(i18nClient)
-							});
-						});
-						//const reactOutput = ReactDOMServer.renderToString();
-
-
-					} catch (err) {
-						serveFailure('error', res, 'renderOnServer render funcion failed', err)
-					}
+					res.render(path.resolve(__dirname, 'renderOnServer.ejs'), {
+						preloadedData: JSON.stringify(data).replace(/\//g, '\\/'),
+						assetsPath: assetsPath,
+						reactOutput,
+						title: helmet.title,
+						meta: helmet.meta,
+						link: helmet.link,
+						isomorphicVars: isoVars,
+						NODE_ENV: process.env.NODE_ENV,
+						i18n: JSON.stringify(i18nClient)
+					});
+				} catch (err) {
+					serveFailure('error', res, 'renderOnServer render funcion failed', err)
 				}
-
-				IsomorphicRouter.prepareData(renderProps, networkLayer).then(render, next);
-			} catch (err) {
-				serveFailure('error', res, 'renderOnServer failed', err);
 			}
-		})
-		.catch((error) => serveAuthenticationFailed(req, res, error, false))
+
+			IsomorphicRouter.prepareData(renderProps, networkLayer).then(render, next);
+		} catch (err) {
+			serveFailure('error', res, 'renderOnServer failed', err);
+		}
+	})
+	.catch((error) => serveAuthenticationFailed(req, res, error, false))
 }
