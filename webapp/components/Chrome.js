@@ -27,30 +27,30 @@ class Chrome extends React.Component {
 		this.muiTheme = getMuiTheme(
 			muiTheme, {userAgent: navigator.userAgent}
 		);
-	}
+	};
 
 	getChildContext() {
 		return ( {
 			muiTheme: this.muiTheme
 		} );
-	}
+	};
 
 	_handle_onTouchTap_NavigationToggle = () => {
 		this._handle_RequestChangeNavDrawer(!this.state.navDrawerOpen);
-	}
+	};
 
 	_handle_RequestChangeNavDrawer = (open) => {
 		this.setState({
 			navDrawerOpen: open,
 		})
-	}
+	};
 
 	_handle_onChangeList_AppNavDrawer = (event, value) => {
-		this.context.router.push(value)
+		this.context.router.push(value);
 		this.setState({
 			navDrawerOpen: false,
-		})
-	}
+		});
+	};
 
 
 	getStyles() {
@@ -70,12 +70,12 @@ class Chrome extends React.Component {
 			contentWhenMedium: {
 				margin: `${spacing.desktopGutter * 2}px ${spacing.desktopGutter * 3}px`,
 			},
-		}
+		};
 
 		if (this.props.width === MEDIUM || this.props.width === LARGE)
-			styles.content = Object.assign(styles.content, styles.contentWhenMedium)
+			styles.content = Object.assign(styles.content, styles.contentWhenMedium);
 
-		return styles
+		return styles;
 	}
 
 	render() {
@@ -154,13 +154,12 @@ Chrome.childContextTypes = {
 export default Relay.createContainer(withWidth()(Chrome), {
 	fragments: {
 		Viewer: () => Relay.QL `
-      fragment on Viewer {
-        User_IsAnonymous,
-        UserToken2,
-        ${ ChromeRightIcon.getFragment('Viewer') },
-        ${ AppNavDrawer.getFragment('Viewer') },
-        ${ Footer.getFragment('Viewer') },
-      }
-    `,
+    	fragment on Viewer {
+    		User_IsAnonymous,
+			UserToken2,
+			${ ChromeRightIcon.getFragment('Viewer') },
+			${ AppNavDrawer.getFragment('Viewer') },
+			${ Footer.getFragment('Viewer') },
+		}`,
 	},
 })

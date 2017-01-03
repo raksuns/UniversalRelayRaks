@@ -6,6 +6,7 @@ import Relay from 'react-relay'
 import IconButton from 'material-ui/IconButton';
 import {List, ListItem, makeSelectable} from 'material-ui/List'
 import { translate } from 'react-i18next';
+import ContentInbox from 'material-ui/svg-icons/content/inbox';
 
 const SelectableList = makeSelectable(List);
 
@@ -16,8 +17,7 @@ const itemStyles = {
 };
 
 const innerDivStyle = {
-	paddingBottom: 12,
-	paddingTop: 12
+
 };
 
 @translate(['common'])
@@ -29,8 +29,8 @@ class NavMenu extends React.Component {
 	render() {
 		const { t } = this.props;
 		let nestedItems_Misc = [
-			<ListItem primaryText={t('navmenu.home')} style={itemStyles} innerDivStyle={innerDivStyle} value="/"/>,
-			<ListItem primaryText="Compendium" style={itemStyles} innerDivStyle={innerDivStyle} value="/compendium"/>,
+			<ListItem primaryText={t('contact')} style={itemStyles} innerDivStyle={innerDivStyle} value="/"/>,
+			<ListItem primaryText={t('story')} style={itemStyles} innerDivStyle={innerDivStyle} value="/compendium"/>,
 		]
 		if (!this.props.Viewer.User_IsAnonymous) {
 			nestedItems_Misc.push(<ListItem primaryText="User Profile" style={itemStyles} innerDivStyle={innerDivStyle} value="/user"/>)
@@ -40,14 +40,15 @@ class NavMenu extends React.Component {
 		return (
 			<SelectableList
 				style={{
-					padding: '8px 12px 8px',
+					padding: '8px',
 				}}
 				className="sidenav"
 				value={ this.props.value }
 				onChange={ this.props.onChange }>
 				<ListItem
 					style={itemStyles} innerDivStyle={innerDivStyle}
-					primaryText="Ensayo"
+					primaryText={t('contact')}
+					leftIcon={<ContentInbox />}
 					primaryTogglesNestedList={true}
 					nestedItems={ [
 						<ListItem primaryText="View" style={itemStyles} innerDivStyle={innerDivStyle} value="/ensayo" />,
@@ -55,7 +56,8 @@ class NavMenu extends React.Component {
           			] }/>
 				<ListItem
 					style={itemStyles}
-					primaryText="To Do"
+					primaryText={t('story')}
+					leftIcon={<ContentInbox />}
 					primaryTogglesNestedList={true} innerDivStyle={innerDivStyle}
 					nestedItems={ [
 						<ListItem primaryText="All" style={itemStyles} innerDivStyle={innerDivStyle} value="/todo" />,
@@ -64,7 +66,8 @@ class NavMenu extends React.Component {
 					  ] }/>
 				<ListItem
 					style={itemStyles} innerDivStyle={innerDivStyle}
-					primaryText="Translaticiarum"
+					primaryText={t('schedule')}
+					leftIcon={<ContentInbox />}
 					primaryTogglesNestedList={true}
 					nestedItems={ [
 						<ListItem primaryText="Grid" style={itemStyles} innerDivStyle={innerDivStyle} value="/translaticiarum" />,
@@ -72,7 +75,8 @@ class NavMenu extends React.Component {
 					]}/>
 				<ListItem
 					style={itemStyles} innerDivStyle={innerDivStyle}
-					primaryText="Material-UI"
+					primaryText={t('message')}
+					leftIcon={<ContentInbox />}
 					primaryTogglesNestedList={true}
 					nestedItems={ [
 						<ListItem primaryText="Home" style={itemStyles} innerDivStyle={innerDivStyle} value="/mui" />,
@@ -82,7 +86,17 @@ class NavMenu extends React.Component {
 					] }/>
 				<ListItem
 					style={itemStyles} innerDivStyle={innerDivStyle}
-					primaryText="Misc"
+					primaryText={t('cscenter')}
+					leftIcon={<ContentInbox />}
+					primaryTogglesNestedList={true}
+					nestedItems={ [
+						<ListItem primaryText="Grid" style={itemStyles} innerDivStyle={innerDivStyle} value="/translaticiarum" />,
+						<ListItem primaryText="List" style={itemStyles} innerDivStyle={innerDivStyle} value="/translaticiarum/edit" />,
+					]}/>
+				<ListItem
+					style={itemStyles} innerDivStyle={innerDivStyle}
+					primaryText={t('configure')}
+					leftIcon={<ContentInbox />}
 					primaryTogglesNestedList={true}
 					nestedItems={ nestedItems_Misc }
 				/>

@@ -15,6 +15,7 @@ import log from '../server/log'
 import ObjectManager from '../graphql/ObjectManager'
 import routes from '../configuration/webapp/routes'
 import schema from '../graphql/schema' // Schema for GraphQL server
+import injectTapEventPlugin from 'react-tap-event-plugin';
 
 import i18n from './i18n-server';
 import { I18nextProvider, loadNamespaces } from 'react-i18next';
@@ -22,6 +23,9 @@ import { I18nextProvider, loadNamespaces } from 'react-i18next';
 // Read environment
 require('dotenv').load();
 
+// Needed for onTouchTap
+// http://stackoverflow.com/a/34015469/988941
+injectTapEventPlugin();
 
 // Load up isomorphic vars here, for server rendering
 const isoVars = JSON.stringify(isomorphicVars());
@@ -93,9 +97,8 @@ function reunderOnServerCorrectRequest(req, res, next, assetsPath, renderProps, 
 					//console.log("Isomorphic : " + JSON.stringify(IsomorphicRouter.render(props)));
 					//const props2 = ;
 					const reactOutput = ReactDOMServer.renderToString(
-						<I18nextProvider i18n={i18nServer}><IsomorphicRouter.RouterContext {...props} /></I18nextProvider>);
+						<I18nextProvider i18n={i18nServer}><IsomorphicRouter.render {...props} /></I18nextProvider>);
 					// Get the react output HTML
-
 					const helmet = Helmet.rewind();
 
 					res.render(path.resolve(__dirname, 'renderOnServer.ejs'), {
