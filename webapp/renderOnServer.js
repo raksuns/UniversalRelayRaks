@@ -17,7 +17,7 @@ import routes from '../configuration/webapp/routes'
 import schema from '../graphql/schema' // Schema for GraphQL server
 
 import i18n from './i18n-server';
-import { loadNamespaces } from 'react-i18next';
+import { I18nextProvider, loadNamespaces } from 'react-i18next';
 
 // Read environment
 require('dotenv').load();
@@ -43,13 +43,13 @@ export default(req, res, next, assetsPath, i18nServer, i18nClient) => {
 		else if (redirectLocation)
 			res.redirect(302, redirectLocation.pathname + redirectLocation.search);
 		else if (renderProps)
-			reunderOnServerCorrectRequest(req, res, next, assetsPath, renderProps, i18nClient);
+			reunderOnServerCorrectRequest(req, res, next, assetsPath, renderProps, i18nServer, i18nClient);
 		else
 			res.status(404).sendFile(httpError404FileName);
 	});
 }
 
-function reunderOnServerCorrectRequest(req, res, next, assetsPath, renderProps, i18nClient) {
+function reunderOnServerCorrectRequest(req, res, next, assetsPath, renderProps, i18nServer, i18nClient) {
 	// create individual object manager for each request
 	const objectManager = new ObjectManager();
 
@@ -92,7 +92,8 @@ function reunderOnServerCorrectRequest(req, res, next, assetsPath, renderProps, 
 					//console.log("props : " + JSON.stringify(props));
 					//console.log("Isomorphic : " + JSON.stringify(IsomorphicRouter.render(props)));
 					//const props2 = ;
-					const reactOutput = ReactDOMServer.renderToString(<IsomorphicRouter.RouterContext {...props} />);
+					const reactOutput = ReactDOMServer.renderToString(
+						<I18nextProvider i18n={i18nServer}><IsomorphicRouter.RouterContext {...props} /></I18nextProvider>);
 					// Get the react output HTML
 
 					const helmet = Helmet.rewind();
