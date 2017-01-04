@@ -93,12 +93,10 @@ function reunderOnServerCorrectRequest(req, res, next, assetsPath, renderProps, 
 					// Also set global location for the leftNav
 					global.location = {pathname: req.originalUrl};
 
-					//console.log("props : " + JSON.stringify(props));
-					//console.log("Isomorphic : " + JSON.stringify(IsomorphicRouter.render(props)));
-					//const props2 = ;
+					// Get the react output HTML
 					const reactOutput = ReactDOMServer.renderToString(
 						<I18nextProvider i18n={i18nServer}><IsomorphicRouter.render {...props} /></I18nextProvider>);
-					// Get the react output HTML
+
 					const helmet = Helmet.rewind();
 
 					res.render(path.resolve(__dirname, 'renderOnServer.ejs'), {
