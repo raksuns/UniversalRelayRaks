@@ -60,7 +60,7 @@ db.users.mapReduce(mapUsers, reduce, {"out": {"reduce": "users_comments"}});
 db.comments.mapReduce(mapComments, reduce, {"out": {"reduce": "users_comments"}});
 db.users_comments.find().pretty(); // see the resulting collection
 
-mapTags = function() {
+var mapTags = function() {
 	var values = {
 		id: this._id,
 		owner: this.owner,
@@ -71,21 +71,37 @@ mapTags = function() {
 	emit(this._id, values);
 };
 
-mapTagMap = function() {
+var  mapTagMap = function() {
 	var values = {
 		id: this._id,
 		tagId: this.tag,
 		personId: this.person
 	};
-	emit(this._id, values);
+	emit(this.tag, values);
 };
-
-reduce = function(k, values) {
-	var result = {}, commentFields = {
-		"commentId": '',
-		"comment": '',
-		"created": ''
-	};
+reduceCustZip =  function(k, values) {
+	var result = {};
+	values.forEach(function(value) {
+		var field;
+		if ("cust_id" in value) {
+			if (!("cust_ids" in result)) {
+				result.cust_ids = [];
+			}
+			result.cust_ids.push(value);
+		} else {
+			for (field in value) {
+				if (value.hasOwnProperty(field) ) {
+					result[field] = value[field];
+				}
+			};
+		}
+	});
+	return result;
+};
+db.cust.mapReduce(mapCust, reduceCustZip, {"out": {"reduce": "cust_zip"}});
+db.zip.mapReduce(mapZip, reduceCustZip, {"out": {"reduce": "cust_zip"}});
+reduceTags = function(k, values) {
+	var result = {}
 	values.forEach(function(value) {
 		var field;
 		if ("comment" in value) {
