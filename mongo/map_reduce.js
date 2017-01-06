@@ -123,3 +123,80 @@ reduceTags = function(k, values) {
 	});
 	return result;
 };
+
+var mapDetails = function() {
+	emit(this.studentid, {studentid: this.studentid, classes: this.classes, year: this.year, overall: 0, subscore: 0});
+};
+
+var mapGpas = function() {
+	emit(this.studentid, {studentid: this.studentid, classes: [], year: 0, overall: this.overall, subscore: this.subscore});
+};
+
+var reduce = function(key, values) {
+	var outs = { studentid: "0", classes_1: [], classes_2: [], overall: 0, subscore: 0};
+
+	values.forEach(function(value) {
+		if (value.year == 0) {
+			outs.overall = value.overall;
+			outs.subscore = value.subscore;
+		}
+		else {
+			if (value.year == 1) {
+				outs.classes_1 = value.classes;
+			}
+			if (value.year == 2) {
+				outs.classes_2 = value.classes;
+			}
+
+			outs.studentid = value.studentid;
+		}
+	});
+
+	return outs;
+
+};
+
+res = db.details.mapReduce(mapDetails, reduce, {out: {reduce: 'joined'}})
+res = db.gpas.mapReduce(mapGpas, reduce, {out: {reduce: 'joined'}});
+
+// mapReduce...............
+db.userTags.drop();
+var mapTag = function() {
+	emit(this._id, this);
+};
+
+var  mapTagMap = function() {
+	emit(this.tag, this);
+};
+
+var reduce = function(key, values) {
+	var result = {};
+
+	values.forEach(function(value) {
+		for (var field in value) {
+			if (value.hasOwnProperty(field) ) {
+				result[field] = value[field];
+			}
+		};
+
+	});
+
+	return result;
+
+};
+
+db.tags.mapReduce(mapTag, reduce, {
+	out: {
+		reduce: "userTags"
+	},
+	query: {
+		owner: {
+			$eq: ObjectId("57bfcefaca27b0233600000c")
+		},
+		isDeleted:{'$ne':true}
+	}
+});
+
+db.tagMaps.mapReduce(mapTagMap, reduce, {"out": {"reduce": "userTags"}});
+
+db.userTags.find();

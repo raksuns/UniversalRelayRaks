@@ -63,3 +63,16 @@ db.phone.aggregate([
 	{ $unwind: "$country"},
 	{ $project: {"number": "$number", "countryCode": "$countryCode.code", "country": "$country.name", "_id":0} }
 ])
+
+/////////////////////////////////////////////////////
+
+db.tags.aggregate()
+	.match(qb.where("owner").eq(ObjectId("57bfcefaca27b0233600000c")))
+	.lookup({ from: 'tagMaps', localField: '_id', foreignField: 'tag', as: 'userTagCount'})
+	.project({
+		_id: 1,
+		tagName: 1,
+		pri: 1,
+		createdAt: 1, isDeleted: 1, updatedAt: 1,
+		numberOfPeople: {$size: "$userTagCount"}
+	});
