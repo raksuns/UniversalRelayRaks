@@ -58,18 +58,18 @@ class FullWidthSection extends Component {
 			contentStyle,
 			width,
 			...other,
-		} = this.props
+		} = this.props;
 
-		const styles = this.getStyles()
+		const styles = this.getStyles();
 
-		let content
+		let content;
 		if (useContent)
 			content = React.createElement(
 				contentType, {style: Object.assign(styles.content, contentStyle)},
 				this.props.children
-			)
+			);
 		else
-			content = this.props.children
+			content = this.props.children;
 
 		return (
 			<ClearFix

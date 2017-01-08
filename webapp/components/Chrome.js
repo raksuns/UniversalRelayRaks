@@ -79,15 +79,15 @@ class Chrome extends React.Component {
 	}
 
 	render() {
-		const styles = this.getStyles()
+		const styles = this.getStyles();
 
 		let {
 			navDrawerOpen,
-		} = this.state
+		} = this.state;
 
 		const {
 			prepareStyles,
-		} = this.muiTheme
+		} = this.muiTheme;
 
 		let docked = false
 		let showMenuIconButton = true
