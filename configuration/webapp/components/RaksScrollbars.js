@@ -1,6 +1,7 @@
 import React, { createClass } from 'react';
 import { Scrollbars } from 'react-custom-scrollbars';
 
+// https://github.com/malte-wessel/react-custom-scrollbars/blob/master/docs/customization.md
 export default createClass({
 
 	displayName: 'RaksScrollbars',
