@@ -32,6 +32,10 @@ class NavMenu extends React.Component {
 		t: PropTypes.func,
 	};
 
+	handleScroll() {
+		const { scrollbars } = this.refs;
+		scrollbars.update();
+	}
 
 	render() {
 		const { t } = this.props;
@@ -45,7 +49,7 @@ class NavMenu extends React.Component {
 		}
 
 		return (
-			<Scrollbars universal className="nav-root">
+			<Scrollbars universal className="nav-root" ref="scrollbars">
 			<SelectableList
 				style={{
 					padding: 0, height: '100%'
@@ -58,6 +62,7 @@ class NavMenu extends React.Component {
 					primaryText={t('contact')}
 					leftIcon={<ContentInbox />}
 					primaryTogglesNestedList={true}
+					onNestedListToggle={this.handleScroll.bind(this)}
 					nestedItems={ [
 						<ListItem primaryText={t('contact_all')} leftIcon={<ContentMail />} style={itemStyles} innerDivStyle={subItemStyle} value="/ensayo" />,
 						<ListItem primaryText={t('favorite')} style={itemStyles} innerDivStyle={subItemStyle} value="/ensayo/edit" />,
@@ -76,6 +81,7 @@ class NavMenu extends React.Component {
 					primaryText={t('story')}
 					leftIcon={<ContentInbox />}
 					primaryTogglesNestedList={true}
+					onNestedListToggle={this.handleScroll.bind(this)}
 					nestedItems={ [
 						<ListItem primaryText={t('story_all')} style={itemStyles} innerDivStyle={subItemStyle} value="/todo" />,
 						<ListItem primaryText={t('favorite')} style={itemStyles} innerDivStyle={subItemStyle} value="/todo/active" />,
@@ -89,6 +95,7 @@ class NavMenu extends React.Component {
 					primaryText={t('schedule')}
 					leftIcon={<ContentInbox />}
 					primaryTogglesNestedList={true}
+					onNestedListToggle={this.handleScroll.bind(this)}
 					nestedItems={ [
 						<ListItem primaryText={t('schedule_t')} style={itemStyles} innerDivStyle={subItemStyle} value="/translaticiarum" />,
 						<ListItem primaryText={t('google_calendar_connect')} style={itemStyles} innerDivStyle={subItemStyle} value="/translaticiarum/edit" />,
@@ -98,6 +105,7 @@ class NavMenu extends React.Component {
 					primaryText={t('message')}
 					leftIcon={<ContentInbox />}
 					primaryTogglesNestedList={true}
+					onNestedListToggle={this.handleScroll.bind(this)}
 					nestedItems={ [
 						<ListItem primaryText={t('message')} style={itemStyles} innerDivStyle={subItemStyle} value="/mui" />,
 						<ListItem primaryText={t('send_message')} style={itemStyles} innerDivStyle={subItemStyle} value="/mui/icons" />,
@@ -109,6 +117,7 @@ class NavMenu extends React.Component {
 					primaryText={t('cscenter')}
 					leftIcon={<ContentInbox />}
 					primaryTogglesNestedList={true}
+					onNestedListToggle={this.handleScroll.bind(this)}
 					nestedItems={ [
 						<ListItem primaryText={t('notice')} style={itemStyles} innerDivStyle={subItemStyle} value="/translaticiarum/edit" />,
 						<ListItem primaryText={t('intro')} style={itemStyles} innerDivStyle={subItemStyle} value="/translaticiarum" />,
@@ -126,6 +135,7 @@ class NavMenu extends React.Component {
 					primaryText={t('configure')}
 					leftIcon={<ContentInbox />}
 					primaryTogglesNestedList={true}
+					onNestedListToggle={this.handleScroll.bind(this)}
 					nestedItems={ [
 						<ListItem primaryText={t('recommend')} style={itemStyles} innerDivStyle={subItemStyle} value="/translaticiarum/edit" />,
 						<ListItem primaryText={t('keyboard')} style={itemStyles} innerDivStyle={subItemStyle} value="/translaticiarum" />,
