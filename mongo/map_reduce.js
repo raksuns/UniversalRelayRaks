@@ -200,3 +200,57 @@ db.tags.mapReduce(mapTag, reduce, {
 db.tagMaps.mapReduce(mapTagMap, reduce, {"out": {"reduce": "userTags"}});
 
 db.userTags.find();
+
+db.personTags.drop();
+
+db.personTags.drop();
+
+var tagMap = function() {
+	emit(this._id, this);
+}
+
+var tagCount = function() {
+	var res = {
+		person: this.person,
+		tag: this.tag,
+		count: 1
+	};
+	emit(this.tag, res);
+}
+
+var tagReducer = function(key, values) {
+	var results = {
+		"keyId" : "",
+		"tagId" : "",
+		"tagName" : "",
+		"priority" : "",
+		"numberOfPeople": 0,
+		"createdAt" : "",
+		"isDeleted" : "",
+		"updatedAt" : ""
+	};
+
+	values.forEach(function(value) {
+		if(value.hasOwnProperty("owner")) {
+			results.keyId = key;
+			results.tagId = value._id;
+			results.tagName = value.tagName;
+			results.priority = value.pri;
+			results.createdAt = value.createdAt;
+			results.updatedAt = value.updatedAt;
+			results.isDeleted = value.isDeleted;
+		}
+
+		if(value.count) {
+			results.numberOfPeople += value.count;
+		}
+
+	});
+
+	return results;
+}
+
+db.tags.mapReduce(tagMap, tagReducer, {query: {owner: {$eq: ObjectId("57bfcefaca27b0233600000c")}, isDeleted:{'$ne':true}}, out: {reduce : 'personTags'}});
+db.tagMaps.mapReduce(tagCount, tagReducer, {out: {reduce : 'personTags'}});
+
+db.personTags.find();
