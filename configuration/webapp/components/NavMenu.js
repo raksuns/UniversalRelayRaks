@@ -9,7 +9,7 @@ import { translate } from 'react-i18next';
 import ContentInbox from 'material-ui/svg-icons/content/inbox';
 import ContentMail from 'material-ui/svg-icons/content/mail';
 import Divider from 'material-ui/Divider';
-import { Scrollbars } from 'react-custom-scrollbars';
+import RaksScrollbars from './RaksScrollbars';
 
 const SelectableList = makeSelectable(List);
 
@@ -33,8 +33,8 @@ class NavMenu extends React.Component {
 	};
 
 	handleScroll() {
-		const { scrollbars } = this.refs;
-		scrollbars.update();
+		// const { scrollbars } = this.refs;
+		// scrollbars.update();
 	}
 
 	render() {
@@ -49,12 +49,12 @@ class NavMenu extends React.Component {
 		}
 
 		return (
-			<Scrollbars universal className="nav-root" ref="scrollbars">
+			<RaksScrollbars universal className="nav-root" ref="scrollbars" style={{ width: 232 }}>
 			<SelectableList
 				style={{
-					padding: 0, height: '100%'
+					padding: 0,
 				}}
-				className="sidenav"
+				className="side-nav"
 				value={ this.props.value }
 				onChange={ this.props.onChange }>
 				<ListItem
@@ -142,7 +142,7 @@ class NavMenu extends React.Component {
 					]}
 				/>
 			</SelectableList>
-			</Scrollbars>
+			</RaksScrollbars>
 		)
 	}
 }
