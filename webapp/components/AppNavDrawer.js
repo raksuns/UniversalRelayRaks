@@ -13,7 +13,7 @@ class AppNavDrawer extends React.Component {
 	_handle_onTouchTap_Drawer = () => {
 		this.context.router.push('/');
 		this.props.onRequestChangeNavDrawer(false)
-	}
+	};
 
 	render() {
 		const {
@@ -36,7 +36,7 @@ class AppNavDrawer extends React.Component {
 					width: 232,
 					backgroundColor: '#f2f2f2'
 				}}>
-				<div style={ {
+				<div style={{
 					cursor: 'pointer',
 					fontSize: 24,
 					color: typography.textFullWhite,
@@ -44,7 +44,7 @@ class AppNavDrawer extends React.Component {
 					fontWeight: typography.fontWeightLight,
 					backgroundColor: this.context.muiTheme.palette.primary1Color,
 					paddingLeft: spacing.desktopGutter,
-          			} }
+          			}}
 					onTouchTap={ this._handle_onTouchTap_Drawer }
 				>{ NavMenuTitle }</div>
 				<NavMenu

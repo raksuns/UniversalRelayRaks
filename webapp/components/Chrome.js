@@ -89,19 +89,19 @@ class Chrome extends React.Component {
 			prepareStyles,
 		} = this.muiTheme;
 
-		let docked = false
-		let showMenuIconButton = true
+		let docked = false;
+		let showMenuIconButton = true;
 
 		if (this.props.width === LARGE) {
-			docked = true
-			navDrawerOpen = true
-			showMenuIconButton = false
+			docked = true;
+			navDrawerOpen = true;
+			showMenuIconButton = false;
 
 			styles.navDrawer = {
 				zIndex: styles.appBar.zIndex - 1,
-			}
-			styles.appBar.paddingLeft = 276
-			styles.root.paddingLeft = 256
+			};
+			styles.appBar.paddingLeft = 276;
+			styles.root.paddingLeft = 256;
 		}
 
 		return (
@@ -110,6 +110,7 @@ class Chrome extends React.Component {
 				<AppBar
 					onLeftIconButtonTouchTap={ this._handle_onTouchTap_NavigationToggle }
 					title={ MainScreenTitle }
+					titleStyle={{lineHeight:'56px', height:56}}
 					zDepth={0}
 					iconElementRight={ <ChromeRightIcon Viewer={this.props.Viewer} /> }
 					style={styles.appBar}

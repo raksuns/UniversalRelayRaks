@@ -1,17 +1,17 @@
 /* @flow weak */
 
 import {
-  blue500,
-  blue700,
-  blueGrey100,
-  blueGrey500,
-  darkBlack,
-  grey300,
-  lightBlack,
-  purpleA200,
-  white
+	blue500,
+	blue700,
+	blueGrey100,
+	blueGrey500,
+	darkBlack,
+	grey300,
+	lightBlack,
+	purpleA200,
+	white
 } from 'material-ui/styles/colors'
-import { fade } from 'material-ui/utils/colorManipulator'
+import {fade} from 'material-ui/utils/colorManipulator'
 
 var base1 = "#DA4C2E";
 var base2 = "#94061e";
@@ -36,37 +36,39 @@ var aA400 = exports.redA400 = '#FF1744';
 var aA700 = exports.redA700 = '#D50000';
 
 
-
 export default {
-  spacing: {
-    iconSize: 24,
-    desktopGutter: 24,
-    desktopGutterMore: 32,
-    desktopGutterLess: 16,
-    desktopGutterMini: 8,
-    desktopKeylineIncrement: 64,
-    desktopDropDownMenuItemHeight: 32,
-    desktopDropDownMenuFontSize: 15,
-    desktopLeftNavMenuItemHeight: 48,
-    desktopSubheaderHeight: 48,
-    desktopToolbarHeight: 56,
-  },
-  fontFamily: "'Helvetica Neue',Helvetica,Arial,sans-serif",
-  palette: {
-    primary1Color: a500,
-    primary2Color: a700,
-    primary3Color: lightBlack,
-    accent1Color: purpleA200,
-    accent2Color: a100,
-    accent3Color: a500,
-    textColor: darkBlack,
-    alternateTextColor: white,
-    canvasColor: white,
-    borderColor: grey300,
-    disabledColor: fade( darkBlack, 0.3 ),
-    pickerHeaderColor: blue500,
-  },
-  avatar: {
-    borderColor: white,
-  },
+	spacing: {
+		iconSize: 24,
+		desktopGutter: 24,
+		desktopGutterMore: 32,
+		desktopGutterLess: 16,
+		desktopGutterMini: 8,
+		desktopKeylineIncrement: 56,
+		desktopDropDownMenuItemHeight: 32,
+		desktopDropDownMenuFontSize: 15,
+		desktopLeftNavMenuItemHeight: 40,
+		desktopSubheaderHeight: 40,
+		desktopToolbarHeight: 56,
+	},
+	fontFamily: "'Helvetica Neue',Helvetica,Arial,sans-serif",
+	palette: {
+		primary1Color: a500,
+		primary2Color: a700,
+		primary3Color: lightBlack,
+		accent1Color: purpleA200,
+		accent2Color: a100,
+		accent3Color: a500,
+		textColor: darkBlack,
+		alternateTextColor: white,
+		canvasColor: white,
+		borderColor: grey300,
+		disabledColor: fade(darkBlack, 0.3),
+		pickerHeaderColor: blue500,
+	},
+	avatar: {
+		borderColor: white,
+	},
+	appBar: {
+		height: 56,
+	},
 }

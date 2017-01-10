@@ -7,7 +7,7 @@ import spacing from 'material-ui/styles/spacing'
 import withWidth, {SMALL, MEDIUM, LARGE} from '../scripts/withWidth'
 
 
-const desktopGutter = spacing.desktopGutter
+const desktopGutter = spacing.desktopGutter;
 
 
 class FullWidthSection extends Component {
@@ -18,12 +18,12 @@ class FullWidthSection extends Component {
 		style: PropTypes.object,
 		useContent: PropTypes.bool,
 		width: PropTypes.number.isRequired,
-	}
+	};
 
 	static defaultProps = {
 		useContent: false,
 		contentType: 'div',
-	}
+	};
 
 	getStyles() {
 		return {
@@ -48,7 +48,7 @@ class FullWidthSection extends Component {
 				paddingBottom: desktopGutter * 3,
 			},
 		}
-	}
+	};
 
 	render() {
 		const {
@@ -84,7 +84,7 @@ class FullWidthSection extends Component {
 				{content}
 			</ClearFix>
 		)
-	}
+	};
 }
 
-export default withWidth()(FullWidthSection)
+export default withWidth()(FullWidthSection);
