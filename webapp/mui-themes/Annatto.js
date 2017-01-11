@@ -37,6 +37,11 @@ var aA700 = exports.redA700 = '#D50000';
 
 
 export default {
+	menuItem: {
+		dataHeight: 24,
+		padding: 8,
+		height: 40
+	},
 	spacing: {
 		iconSize: 24,
 		desktopGutter: 24,
@@ -49,6 +54,7 @@ export default {
 		desktopLeftNavMenuItemHeight: 40,
 		desktopSubheaderHeight: 40,
 		desktopToolbarHeight: 56,
+		desktopDrawerMenuItemHeight:40
 	},
 	fontFamily: "'Helvetica Neue',Helvetica,Arial,sans-serif",
 	palette: {

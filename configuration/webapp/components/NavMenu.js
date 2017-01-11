@@ -17,9 +17,11 @@ const SelectableList = makeSelectable(List);
 const itemStyles = {
 	borderRadius: 2,
 	color: '#212121',
-	fontWeight: 'bold',
+	fontWeight: 'bold', // backgroundColor: 'rgba(0,0,0,0.05)'
 };
-
+const divStyle = {
+	padding: 0
+};
 const subItemStyle = {
 	fontSize: 14,
 };
@@ -38,8 +40,8 @@ class NavMenu extends React.Component {
 			<ListItem primaryText={t('story')} style={itemStyles} innerDivStyle={subItemStyle} value="/compendium"/>,
 		];
 		if (!this.props.Viewer.User_IsAnonymous) {
-			nestedItems_Misc.push(<ListItem primaryText="User Profile" style={itemStyles} innerDivStyle={subItemStyle} value="/user"/>)
-			nestedItems_Misc.push(<ListItem primaryText="Force Login" style={itemStyles} innerDivStyle={subItemStyle} value="/force_login"/>)
+			nestedItems_Misc.push(<ListItem primaryText="User Profile" style={itemStyles} innerDivStyle={subItemStyle} value="/user"/>);
+			nestedItems_Misc.push(<ListItem primaryText="Force Login" style={itemStyles} innerDivStyle={subItemStyle} value="/force_login"/>);
 		}
 
 		return (
@@ -56,6 +58,7 @@ class NavMenu extends React.Component {
 					primaryText={t('contact')}
 					leftIcon={<ContentInbox />}
 					primaryTogglesNestedList={true}
+					nestedListStyle={divStyle}
 					nestedItems={ [
 						<ListItem primaryText={t('contact_all')} leftIcon={<ContentMail />} style={itemStyles} innerDivStyle={subItemStyle} value="/ensayo" />,
 						<ListItem primaryText={t('favorite')} style={itemStyles} innerDivStyle={subItemStyle} value="/ensayo/edit" />,

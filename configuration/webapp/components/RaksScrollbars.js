@@ -32,7 +32,7 @@ export default createClass({
 	renderThumb({ style, ...props }) {
 		const { top } = this.state;
 		const thumbStyle = {
-			backgroundColor: `rgb(183, 183, 183)`
+			backgroundColor: `rgb(189, 189, 189)`
 		};
 		return (
 			<div
