@@ -110,9 +110,9 @@ class Chrome extends React.Component {
 				<AppBar
 					onLeftIconButtonTouchTap={ this._handle_onTouchTap_NavigationToggle }
 					title={ MainScreenTitle }
-					titleStyle={{lineHeight:'56px', height:56}}
 					zDepth={0}
 					iconElementRight={ <ChromeRightIcon Viewer={this.props.Viewer} /> }
+					iconStyleRight={{marginTop: 4}}
 					style={styles.appBar}
 					showMenuIconButton={showMenuIconButton}
 				/>

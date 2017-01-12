@@ -24,7 +24,6 @@ class AppNavDrawer extends React.Component {
 			open,
 			style,
 		} = this.props;
-		console.log(this.context.muiTheme);
 		return (
 			<Drawer
 				docked={docked}

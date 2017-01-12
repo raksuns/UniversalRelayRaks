@@ -22,7 +22,14 @@ const itemStyles = {
 const divStyle = {
 	padding: 0
 };
+
+const headerStyle = {
+	paddingTop: 14,
+	paddingBottom: 14,
+};
 const subItemStyle = {
+	paddingTop: 14,
+	paddingBottom: 14,
 	fontSize: 14,
 };
 
@@ -55,6 +62,7 @@ class NavMenu extends React.Component {
 				onChange={ this.props.onChange }>
 				<ListItem
 					style={itemStyles}
+					innerDivStyle={headerStyle}
 					primaryText={t('contact')}
 					leftIcon={<ContentInbox />}
 					primaryTogglesNestedList={true}
@@ -74,6 +82,7 @@ class NavMenu extends React.Component {
           			] }/>
 				<ListItem
 					style={itemStyles}
+					innerDivStyle={headerStyle}
 					primaryText={t('story')}
 					leftIcon={<ContentInbox />}
 					primaryTogglesNestedList={true}
@@ -87,6 +96,7 @@ class NavMenu extends React.Component {
 					  ] }/>
 				<ListItem
 					style={itemStyles}
+					innerDivStyle={headerStyle}
 					primaryText={t('schedule')}
 					leftIcon={<ContentInbox />}
 					primaryTogglesNestedList={true}
@@ -96,6 +106,7 @@ class NavMenu extends React.Component {
 					]}/>
 				<ListItem
 					style={itemStyles}
+					innerDivStyle={headerStyle}
 					primaryText={t('message')}
 					leftIcon={<ContentInbox />}
 					primaryTogglesNestedList={true}
@@ -107,6 +118,7 @@ class NavMenu extends React.Component {
 					] }/>
 				<ListItem
 					style={itemStyles}
+					innerDivStyle={headerStyle}
 					primaryText={t('cscenter')}
 					leftIcon={<ContentInbox />}
 					primaryTogglesNestedList={true}
@@ -124,6 +136,7 @@ class NavMenu extends React.Component {
 					]}/>
 				<ListItem
 					style={itemStyles}
+					innerDivStyle={headerStyle}
 					primaryText={t('configure')}
 					leftIcon={<ContentInbox />}
 					primaryTogglesNestedList={true}
