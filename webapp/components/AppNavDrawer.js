@@ -32,7 +32,6 @@ class AppNavDrawer extends React.Component {
 				containerStyle={{
 					boxShadow: 'none',
 					zIndex: zIndex.drawer - 100,
-					width: 232,
 					backgroundColor: '#f2f2f2'
 				}}>
 				<div style={{

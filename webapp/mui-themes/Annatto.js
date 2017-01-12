@@ -43,13 +43,12 @@ export default {
 		desktopGutterMore: 32,
 		desktopGutterLess: 16,
 		desktopGutterMini: 8,
-		desktopKeylineIncrement: 56,
+		desktopKeylineIncrement: 64,
 		desktopDropDownMenuItemHeight: 32,
 		desktopDropDownMenuFontSize: 15,
-		desktopLeftNavMenuItemHeight: 40,
-		desktopSubheaderHeight: 40,
+		desktopLeftNavMenuItemHeight: 48,
+		desktopSubheaderHeight: 48,
 		desktopToolbarHeight: 56,
-		desktopDrawerMenuItemHeight: 40
 	},
 
 	fontFamily: "'Helvetica Neue',Helvetica,Arial,sans-serif",
@@ -71,9 +70,8 @@ export default {
 	appBar: {
 		color: "#F44336",
 		textColor: "#ffffff",
-		height: 56,
+		height: 64,
 		titleFontWeight: 400,
-		padding: 24
 	},
 	avatar: {
 		color: "#ffffff",
@@ -98,9 +96,8 @@ export default {
 		selectedFontSize: 14
 	},
 	button: {
-		height: 36,
 		minWidth: 88,
-		iconButtonSize: 36 //48
+		iconButtonSize: 48
 	},
 	card: {
 		titleColor: "rgba(0, 0, 0, 0.87)",
@@ -182,7 +179,6 @@ export default {
 		backgroundColor: "#e040fb"
 	},
 	drawer: {
-		width: 224,
 		color: "#ffffff"
 	},
 	listItem: {

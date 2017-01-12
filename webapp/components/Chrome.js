@@ -112,7 +112,6 @@ class Chrome extends React.Component {
 					title={ MainScreenTitle }
 					zDepth={0}
 					iconElementRight={ <ChromeRightIcon Viewer={this.props.Viewer} /> }
-					iconStyleRight={{marginTop: 4}}
 					style={styles.appBar}
 					showMenuIconButton={showMenuIconButton}
 				/>

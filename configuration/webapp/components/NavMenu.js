@@ -24,13 +24,9 @@ const divStyle = {
 };
 
 const headerStyle = {
-	paddingTop: 14,
-	paddingBottom: 14,
 };
 const subItemStyle = {
-	paddingTop: 14,
-	paddingBottom: 14,
-	fontSize: 14,
+	fontSize: 15,
 };
 
 
@@ -52,7 +48,7 @@ class NavMenu extends React.Component {
 		}
 
 		return (
-			<RaksScrollbars universal className="nav-root" ref="scrollbars" style={{ width: 232 }}>
+			<RaksScrollbars universal className="nav-root" ref="scrollbars">
 			<SelectableList
 				style={{
 					padding: 0,
@@ -64,7 +60,7 @@ class NavMenu extends React.Component {
 					style={itemStyles}
 					innerDivStyle={headerStyle}
 					primaryText={t('contact')}
-					leftIcon={<ContentInbox />}
+					leftIcon={<ContentInbox/>}
 					primaryTogglesNestedList={true}
 					nestedListStyle={divStyle}
 					nestedItems={ [

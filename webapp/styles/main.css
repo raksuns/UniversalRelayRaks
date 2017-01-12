@@ -17,8 +17,7 @@ body {
 	bottom: 0;
 	left: 0;
 	position: fixed !important;
-	width: 232px;
-	top: 56px;
+	top: 64px;
 	height: initial !important;
 	z-index: 1;
 	-webkit-transition: -webkit-transform .15s ease-in-out;
@@ -28,7 +27,6 @@ body {
 	background: #f2f2f2;
 	color: #616161;
 	line-height: 40px;
-	padding: 12px 8px 22px !important;
+	padding: 12px 2px 22px 0 !important;
 	white-space: nowrap;
-	width: 210px;
 }
