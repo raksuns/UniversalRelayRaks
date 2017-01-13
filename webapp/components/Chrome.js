@@ -142,11 +142,11 @@ class Chrome extends React.Component {
 
 Chrome.contextTypes = {
 	router: React.PropTypes.object.isRequired,
-}
+};
 
 Chrome.childContextTypes = {
 	muiTheme: React.PropTypes.object,
-}
+};
 
 //
 

@@ -35,6 +35,9 @@ var aA200 = exports.redA200 = '#FF5252';
 var aA400 = exports.redA400 = '#FF1744';
 var aA700 = exports.redA700 = '#D50000';
 
+// wordpress : 272 * 47
+// inbox : 232 = 208 * 40, subheader : 208 * 24, header : 100% * 56
+
 
 export default {
 	spacing: {

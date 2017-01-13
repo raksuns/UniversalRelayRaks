@@ -23,6 +23,7 @@
 	"my_message" : "내 메시지함",
 	"sent_message" : "보낸 메시지",
 	"recv_message" : "받은 메시지",
+	"reserved_message" : "예약 메시지",
 	"cscenter" : "고객센터",
 	"notice" : "공지사항",
 	"intro" : "TexTory 소개",
