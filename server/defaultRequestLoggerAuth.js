@@ -5,17 +5,17 @@ import matchInDepth from '../scripts/matchInDepth'
 
 
 // Read environment
-require( 'dotenv' ).load()
+require( 'dotenv' ).load();
 
 
-const condition = JSON.parse( process.env.TRACE_CONDITION_REQUEST_AUTH )
+const condition = JSON.parse( process.env.TRACE_CONDITION_REQUEST_AUTH );
 
 // Example for logging requests that:
 // { "trace" : "none" } - do not trace any requests
 // { "clientIP": "127.0.0.1" } - trace requests coming from localhost
 
 export default function defaultrequestLoggerAuth( requestAndResponse ) {
-  let logLevel = null
+  let logLevel = null;
 
   // TODO: Whhat errors for Auth should be logged? definitily not 401.
   // // If there is an error, log it as an error
@@ -24,8 +24,8 @@ export default function defaultrequestLoggerAuth( requestAndResponse ) {
   // Otherwise, if it is a trace, log it as info
   //else
   if( matchInDepth( requestAndResponse, condition ) )
-    logLevel = 'info'
+    logLevel = 'info';
 
   if( logLevel )
-    log.log( logLevel, 'Auth request', requestAndResponse )
+    log.log( logLevel, 'Auth request', requestAndResponse );
 }

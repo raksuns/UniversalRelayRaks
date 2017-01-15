@@ -5,21 +5,21 @@ import express from 'express'
 import defaultPersister from '../configuration/graphql/defaultPersister'
 
 
-const healthz = express()
+const healthz = express();
 
 
-healthz.get( '/', async( req, res, next ) => {
+healthz.get('/', async(req, res, next) => {
 
-  try {
+	try {
 
-    await defaultPersister.confirmHealth()
-    res.sendStatus( 200 )
+		await defaultPersister.confirmHealth();
+		res.sendStatus(200)
 
-  } catch( err ) {
+	} catch (err) {
 
-    next( new Error( "💩 DB is unreachable" ) )
-  }
-} )
+		next(new Error("💩 DB is unreachable"))
+	}
+});
 
 
 export default healthz

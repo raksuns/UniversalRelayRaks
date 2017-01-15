@@ -15,54 +15,54 @@ const User_0 = new User(Object.assign(getNewUser(), {
 	id: defaultPersister.uuidNull(),
 	UserToken2: AnonymousUserToken2,
 	User_DisplayName: 'Anonymous',
-}))
+}));
 
 // Static set of entity definitions
-const entityDefinitions = {}
+const entityDefinitions = {};
 
 // Static array of object managers
-const setPersisters = new Set()
+const setPersisters = new Set();
 
 // Value for a change indicating that the record is deleted
 const deletedRecord = {
 	deleted: true
-}
+};
 
 export default class ObjectManager {
 
-	Viewer_User_id: string
+	Viewer_User_id: string;
 
 	constructor() {
 		// Loaders for a single record, by entity name
-		this.loadersSingle = {}
+		this.loadersSingle = {};
 
 		// Loaders for a multiple record lists, by entity name
-		this.loadersMultiple = {}
+		this.loadersMultiple = {};
 
 		// Changes made to records, by entity name
-		this.changes = {}
+		this.changes = {};
 
 		// UserID for the viewer. Could be unset if ObjectManager is used by system
-		this.Viewer_User_id = null
+		this.Viewer_User_id = null;
 
 		// Request object, if available
-		this.request = null
+		this.request = null;
 	}
 
 	static registerEntity(entityName: string, EntityType: any, persister: any): void {
 
 		if (entityName in entityDefinitions)
-			throw new Error("Entity already registered: " + entityName)
+			throw new Error("Entity already registered: " + entityName);
 
 		// In order to be able to access the name as a static property of the type
-		EntityType.entityName = entityName
+		EntityType.entityName = entityName;
 
 		// Determine persister - default, or otherwise
 		if (persister == null)
-			persister = defaultPersister
+			persister = defaultPersister;
 
 		// A set would retain only one copy of a persister
-		setPersisters.add(persister)
+		setPersisters.add(persister);
 
 		entityDefinitions[entityName] = {
 			EntityName: entityName,
@@ -77,84 +77,84 @@ export default class ObjectManager {
 
 	static RegisterTriggerForAdd(entityName: string, handler: func): void {
 
-		entityDefinitions[entityName].TriggersForAdd.push(handler)
+		entityDefinitions[entityName].TriggersForAdd.push(handler);
 	}
 
 	static RegisterTriggerForUpdate(entityName: string, handler: func, shouldTrerieveCurrentRecord: boolean): void {
 
-		entityDefinitions[entityName].TriggersForUpdate.push(handler)
+		entityDefinitions[entityName].TriggersForUpdate.push(handler);
 
 		if (shouldTrerieveCurrentRecord)
-			entityDefinitions[entityName].TriggersForUpdateShouldRetrieveCurrentRecord = true
+			entityDefinitions[entityName].TriggersForUpdateShouldRetrieveCurrentRecord = true;
 	}
 
 	static RegisterTriggerForAddAndUpdate(entityName: string, handler: func): void {
 
-		ObjectManager.RegisterTriggerForAdd(entityName, handler)
-		ObjectManager.RegisterTriggerForUpdate(entityName, handler)
+		ObjectManager.RegisterTriggerForAdd(entityName, handler);
+		ObjectManager.RegisterTriggerForUpdate(entityName, handler);
 	}
 
 	static RegisterTriggerForRemove(entityName: string, handler: any) {
 
-		entityDefinitions[entityName].TriggersForRemove.push(handler)
+		entityDefinitions[entityName].TriggersForRemove.push(handler);
 	}
 
 	setViewerUserId(Viewer_User_id: string): void {
 
-		this.Viewer_User_id = Viewer_User_id
+		this.Viewer_User_id = Viewer_User_id;
 	}
 
 	setRequest(req: any): void {
 
-		this.request = req
+		this.request = req;
 	}
 
 	getLoadersSingle(entityName: string) {
 
-		const foundLoaders = this.loadersSingle[entityName]
+		const foundLoaders = this.loadersSingle[entityName];
 		if (foundLoaders != null)
-			return foundLoaders
+			return foundLoaders;
 		else
-			return this.loadersSingle[entityName] = {}
+			return this.loadersSingle[entityName] = {};
 	}
 
 	getLoadersMultiple(entityName: string) {
 
-		const foundLoaders = this.loadersMultiple[entityName]
+		const foundLoaders = this.loadersMultiple[entityName];
 		if (foundLoaders != null)
-			return foundLoaders
+			return foundLoaders;
 		else
-			return this.loadersMultiple[entityName] = {}
+			return this.loadersMultiple[entityName] = {};
 	}
 
 	clearLoadersMultiple(entityName: string) {
 
-		this.loadersMultiple[entityName] = {}
+		this.loadersMultiple[entityName] = {};
 	}
 
 	recordChange(entityName: string, fields: object, isDeletion: boolean) {
 
-		let records = this.changes[entityName]
+		let records = this.changes[entityName];
 		if (records == null)
-			records = this.changes[entityName] = {}
+			records = this.changes[entityName] = {};
 
-		const id = fields.id
+		const id = fields.id;
 
-		records[id] = isDeletion ? deletedRecord : fields
+		records[id] = isDeletion ? deletedRecord : fields;
 	}
 
 	getViewerUserId(): string {
 
 		if (this.Viewer_User_id == null)
-			throw new Error("Object Manager: viewer user id has not been set")
+			throw new Error("Object Manager: viewer user id has not been set");
 
-		return this.Viewer_User_id
+		return this.Viewer_User_id;
 	}
 
 	getRequest(): any {
 
 		if (this.request == null)
-			throw new Error("Object Manager: request has not been set")
+			throw new Error("Object Manager: request has not been set");
 
 		return this.request
 	}
@@ -162,20 +162,20 @@ export default class ObjectManager {
 	getLoader(entityName: string, fieldName: string, multipleResults: boolean) {
 
 		if (!( entityName in entityDefinitions ))
-			throw new Error("Can not find entity type named " + entityName)
+			throw new Error("Can not find entity type named " + entityName);
 
-		const entityDefinition = entityDefinitions[entityName]
-		const entityType = entityDefinition.EntityType
+		const entityDefinition = entityDefinitions[entityName];
+		const entityType = entityDefinition.EntityType;
 
-		let loadersList = multipleResults ? this.getLoadersMultiple(entityName) : this.getLoadersSingle(entityName)
-		let loader = loadersList[fieldName]
+		let loadersList = multipleResults ? this.getLoadersMultiple(entityName) : this.getLoadersSingle(entityName);
+		let loader = loadersList[fieldName];
 		if (loader == null) {
 			if (multipleResults)
-				loader = new DataLoader(filter => entityDefinition.Persister.getObjectList(entityName, entityType, filter))
+				loader = new DataLoader(filter => entityDefinition.Persister.getObjectList(entityName, entityType, filter));
 			else
-				loader = new DataLoader(filter => entityDefinition.Persister.getOneObject(entityName, entityType, filter))
+				loader = new DataLoader(filter => entityDefinition.Persister.getOneObject(entityName, entityType, filter));
 
-			loadersList[fieldName] = loader
+			loadersList[fieldName] = loader;
 		}
 
 		return loader

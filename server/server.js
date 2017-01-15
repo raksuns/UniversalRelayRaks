@@ -95,19 +95,19 @@ ObjectManager.initializePersisters(false, () => {
 	else {
 
 		// Development server - localhost
-		const localhostDevelopmentServer = express()
-		localhostDevelopmentServer.use(router)
-		localhostDevelopmentServer.listen(process.env.PORT, '127.0.0.1')
-		console.log("☄ DEVELOPMENT. Server listening on 127.0.0.1")
+		const localhostDevelopmentServer = express();
+		localhostDevelopmentServer.use(router);
+		localhostDevelopmentServer.listen(process.env.PORT, '127.0.0.1');
+		console.log("☄ DEVELOPMENT. Server listening on 127.0.0.1");
 
 		// Development server - on a specific IP, if different from localhost
 		if (process.env.HOST != '127.0.0.1') {
 
-			const localIPDevelopmentServer = express()
-			localIPDevelopmentServer.use(router)
-			localIPDevelopmentServer.listen(process.env.PORT, process.env.HOST)
-			console.log("☄ DEVELOPMENT. Server listening on " + process.env.HOST)
+			const localIPDevelopmentServer = express();
+			localIPDevelopmentServer.use(router);
+			localIPDevelopmentServer.listen(process.env.PORT, process.env.HOST);
+			console.log("☄ DEVELOPMENT. Server listening on " + process.env.HOST);
 		}
 	}
 
-})
+});
