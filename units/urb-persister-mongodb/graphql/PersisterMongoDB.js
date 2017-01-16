@@ -2,34 +2,18 @@
 
 import Joi from 'joi'
 import uuid from 'node-uuid'
-import vogels from 'vogels'
 import winston from 'winston'
+import mongoose from 'mongoose';
 
 
 require('dotenv').load();
 
 
 const Uuid_Null = '00000000-0000-0000-0000-000000000000';
-const AWS = vogels.AWS;
 
+let db = mongoose.connection;
 
-if (process.env.DYNAMODB_SECRETACCESSKEY) {
-
-	// test on aws
-	AWS.config.update({
-		accessKeyId: process.env.DYNAMODB_ACCESSKEYID,
-		secretAccessKey: process.env.DYNAMODB_SECRETACCESSKEY,
-		region: process.env.DYNAMODB_REGION
-	})
-} else {
-
-	// test locally via docker
-	AWS.config.update({region: 'us-east-1'});
-	const opts = {endpoint: 'http://localhost:8000', apiVersion: '2012-08-10'};
-	vogels.dynamoDriver(new AWS.DynamoDB(opts))
-}
-
-
+mongoose.connect('mongodb://textory:textorypw@localhost:/textory?poolSize=20');
 export default class PersisterMongoDB {
 
 	constructor() {
@@ -172,7 +156,7 @@ export default class PersisterMongoDB {
 			process.exit(1)
 		}
 
-		const vogelsSchema = {
+		const mongoSchema = {
 			schema: {},
 			indexes: []
 		};
@@ -182,7 +166,7 @@ export default class PersisterMongoDB {
 		if (Array.isArray(key))
 			key = key[0];// A bit crude but seems to create the table properly
 
-		vogelsSchema.hashKey = key;
+		mongoSchema.hashKey = key;
 
 		// Copy fields
 		for (let fieldName in tableSchema.fields) {
@@ -206,15 +190,15 @@ export default class PersisterMongoDB {
 				vogelFieldDefinition = Joi.string()
 			}
 
-			vogelsSchema.schema[fieldName] = vogelFieldDefinition
+			mongoSchema.schema[fieldName] = vogelFieldDefinition
 		}
 
 		// Copy indexes
 		if (tableSchema.indexes)
 			for (let fieldName of tableSchema.indexes)
-				vogelsSchema.indexes.push({hashKey: fieldName, name: fieldName + 'Index', type: 'global'})
+				mongoSchema.indexes.push({hashKey: fieldName, name: fieldName + 'Index', type: 'global'})
 
-		this.tables[tableName] = vogels.define(tableName, vogelsSchema)
+		this.tables[tableName] = vogels.define(tableName, mongoSchema)
 	}
 
 	confirmHealth(): Promise < > {
@@ -230,7 +214,7 @@ export default class PersisterMongoDB {
 		// All table schemas should have been added by now.
 		this.canAddMoreTableSchemas = false;
 
-		vogels.createTables((err) => {
+		mongoSchema.createTables((err) => {
 			if (err) {
 				console.log("💩 Initializing DynamoDB persister - error");
 				console.log(err);

@@ -9,9 +9,7 @@ const healthz = express();
 
 
 healthz.get('/', async(req, res, next) => {
-
 	try {
-
 		await defaultPersister.confirmHealth();
 		res.sendStatus(200)
 
