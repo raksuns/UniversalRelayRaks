@@ -1,19 +1,19 @@
 /* @flow weak */
 /* eslint react/prop-types: 0 */
 
-import AppBar from 'material-ui/AppBar'
-import getMuiTheme from 'material-ui/styles/getMuiTheme'
-import React from 'react'
-import Relay from 'react-relay'
-import spacing from 'material-ui/styles/spacing'
+import AppBar from 'material-ui/AppBar';
+import getMuiTheme from 'material-ui/styles/getMuiTheme';
+import React from 'react';
+import Relay from 'react-relay';
+import spacing from 'material-ui/styles/spacing';
 
-import AppNavDrawer from './AppNavDrawer'
-import ChromeHelmet from '../../configuration/webapp/components/ChromeHelmet'
-import ChromeRightIcon from '../../configuration/webapp/components/ChromeRightIcon'
-import Footer from '../../configuration/webapp/components/Footer'
-import {MainScreenTitle} from '../../configuration/webapp/components/ChromeSettings'
-import muiTheme from '../../configuration/webapp/muiTheme.js'
-import withWidth, {LARGE, MEDIUM} from '../scripts/withWidth'
+import AppNavDrawer from './AppNavDrawer';
+import ChromeHelmet from '../../configuration/webapp/components/ChromeHelmet';
+import ChromeRightIcon from '../../configuration/webapp/components/ChromeRightIcon';
+import Footer from '../../configuration/webapp/components/Footer';
+import {MainScreenTitle} from '../../configuration/webapp/components/ChromeSettings';
+import muiTheme from '../../configuration/webapp/muiTheme';
+import withWidth, {LARGE, MEDIUM} from '../scripts/withWidth';
 
 
 class Chrome extends React.Component {

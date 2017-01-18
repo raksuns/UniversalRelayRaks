@@ -16,11 +16,12 @@ export function getUserByCookie(objectManager, req) {
 	let user_id = defaultPersister.uuidNull(); // Anonymous, unless cookie is passed
 
 	try {
-		if (req.cookies.UserToken1)
+		if (req.cookies.UserToken1) {
 			if (req.cookies.UserToken1.length > 10) {
 				var decoded = jwt.decode(req.cookies.UserToken1, process.env.JWT_SECRET);
 				user_id = defaultPersister.uuidFromString(decoded.user_id)
 			}
+		}
 	} catch (err) {
 		return Promise.reject("Could not read auth cookie. " + err)
 	}
@@ -29,10 +30,11 @@ export function getUserByCookie(objectManager, req) {
 		.then((a_User) => {
 			if (a_User) {
 				objectManager.setViewerUserId(user_id);
-				return a_User
-			} else
-				return Promise.reject("User not found")
-		})
+				return a_User;
+			} else {
+				return Promise.reject("User not found");
+			}
+		});
 }
 
 export function verifyUserAuthToken(a_User, req) {
