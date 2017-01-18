@@ -9,4 +9,4 @@ export default new GraphQLInterfaceType({
 	fields: () => ( {
 		id: {type: new GraphQLNonNull(GraphQLID), description: "The globally unique id of the object."}
 	} )
-})
+});

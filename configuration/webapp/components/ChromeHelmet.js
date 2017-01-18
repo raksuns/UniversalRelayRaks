@@ -16,6 +16,6 @@ export default class ChromeHelmet extends React.Component {
 				},
         		] }
 			/>
-		)
+		);
 	}
 }

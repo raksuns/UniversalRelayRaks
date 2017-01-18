@@ -1,10 +1,10 @@
 /* @flow weak */
 
-import {GraphQLSchema} from 'graphql'
+import {GraphQLSchema} from 'graphql';
 
-import QueryType from "./type/QueryType"
-import {maskErrors} from './graphQLError'
-import MutationType from "./type/MutationType"
+import QueryType from "./type/QueryType";
+import {maskErrors} from './graphQLError';
+import MutationType from "./type/MutationType";
 
 
 // export the entire compiled schema which specifies
@@ -16,4 +16,4 @@ const schema = new GraphQLSchema({
 
 maskErrors(schema);
 
-export default schema
+export default schema;

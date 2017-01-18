@@ -1,4 +1,4 @@
 /* @flow weak */
 
-export const SuccessfulLoginRouteName = '/todo'
-export const SuccessfulLoginRouteOptions = { }
+export const SuccessfulLoginRouteName = '/todo';
+export const SuccessfulLoginRouteOptions = { };

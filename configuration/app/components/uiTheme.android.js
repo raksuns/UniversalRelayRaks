@@ -1,6 +1,6 @@
-import deepmerge from 'deepmerge'
+import deepmerge from 'deepmerge';
 
-import uiThemeCommon from './uiThemeCommon'
+import uiThemeCommon from './uiThemeCommon';
 
 
 const uiThemePlatformSpecific = {
@@ -20,6 +20,6 @@ const uiThemePlatformSpecific = {
 			height: 48
 		}
 	}
-}
+};
 
-export default deepmerge(uiThemeCommon, uiThemePlatformSpecific)
+export default deepmerge(uiThemeCommon, uiThemePlatformSpecific);

@@ -1,5 +1,4 @@
-export default
-{
+export default {
 	dimensions: {},
 	palette: {
 		canvasColor: '#ffffff',
@@ -25,4 +24,4 @@ export default
 			}
 		},
 	}
-}
+};

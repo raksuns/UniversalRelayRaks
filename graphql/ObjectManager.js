@@ -72,7 +72,7 @@ export default class ObjectManager {
 			TriggersForUpdate: [],
 			TriggersForRemove: [],
 			TriggersForUpdateShouldRetrieveCurrentRecord: false
-		}
+		};
 	}
 
 	static RegisterTriggerForAdd(entityName: string, handler: func): void {
@@ -156,7 +156,7 @@ export default class ObjectManager {
 		if (this.request == null)
 			throw new Error("Object Manager: request has not been set");
 
-		return this.request
+		return this.request;
 	}
 
 	getLoader(entityName: string, fieldName: string, multipleResults: boolean) {
@@ -178,7 +178,7 @@ export default class ObjectManager {
 			loadersList[fieldName] = loader;
 		}
 
-		return loader
+		return loader;
 	}
 
 	getOneObject(entityName: string, filter: object) {
@@ -187,71 +187,71 @@ export default class ObjectManager {
 		// Special hack for anonymous users
 		if (entityName == 'User')
 			if (filter.id == defaultPersister.uuidNullAsString())
-				return Promise.resolve(User_0)
+				return Promise.resolve(User_0);
 
 		// For all non-user, non 0 ids, load from data loader per protocol
-		const loaderIdentifier = Object.keys(filter).sort().join(',')
-		const loader = this.getLoader(entityName, loaderIdentifier, false)
+		const loaderIdentifier = Object.keys(filter).sort().join(',');
+		const loader = this.getLoader(entityName, loaderIdentifier, false);
 
 		return loader.load(filter)
 			.then((result) => {
-				const changes = this.changes[entityName]
+				const changes = this.changes[entityName];
 				if (changes) {
-					const change = changes[result.id]
+					const change = changes[result.id];
 					if (change != null) {
 						if (change === deletedRecord)
-							result = null // Object is not found, return null
+							result = null; // Object is not found, return null
 						else // Add or update
-							Object.assign(result, change)
+							Object.assign(result, change);
 					}
 				}
-				return result
-			})
+				return result;
+			});
 	}
 
 	getObjectList(entityName: string, filter: object) {
 
 		// TODO x2000 Provide try catch with logging here!
-		const loaderIdentifier = Object.keys(filter).sort().join(',')
-		const loader = this.getLoader(entityName, loaderIdentifier, true)
+		const loaderIdentifier = Object.keys(filter).sort().join(',');
+		const loader = this.getLoader(entityName, loaderIdentifier, true);
 
 		return loader.load(filter)
 			.then((arrResults) => {
-				const changes = this.changes[entityName]
+				const changes = this.changes[entityName];
 				if (changes) {
 					for (let ix = 0; ix < arrResults.length; ix++) {
-						const change = changes[arrResults[ix].id]
+						const change = changes[arrResults[ix].id];
 						if (change != null) {
 							if (change === deletedRecord)
-								arrResults.splice(ix--, 1) // Reduce ix in order not to skip over a record
+								arrResults.splice(ix--, 1); // Reduce ix in order not to skip over a record
 							else // Add or update
-								Object.assign(arrResults[ix], change)
+								Object.assign(arrResults[ix], change);
 						}
 					}
 				}
-				return arrResults
+				return arrResults;
 			})
 	}
 
 	invalidateLoaderCache(entityName: string, fields: any) {
 
 		// At this moment there is no obvious way of knowing what to clear from lists, so delete them all
-		this.clearLoadersMultiple(entityName)
+		this.clearLoadersMultiple(entityName);
 
-		const loadersSingle = this.getLoadersSingle(entityName)
+		const loadersSingle = this.getLoadersSingle(entityName);
 		for (let loaderFieldName in loadersSingle) {
 			if (loaderFieldName === 'id')
-				loadersSingle[loaderFieldName].clear(fields.id)
+				loadersSingle[loaderFieldName].clear(fields.id);
 			else
-				delete loadersSingle[loaderFieldName]
+				delete loadersSingle[loaderFieldName];
 		}
 	}
 
 	executeTriggers(arrTriggers, fields, oldFields) {
 
-		const arrPromises = []
+		const arrPromises = [];
 		for (let trigger of arrTriggers) {
-			arrPromises.push(trigger(this, fields, oldFields))
+			arrPromises.push(trigger(this, fields, oldFields));
 		}
 
 		return Promise.all(arrPromises)
@@ -259,101 +259,101 @@ export default class ObjectManager {
 
 	async add(entityName: string, fields: any): any {
 
-		const entityDefinition = entityDefinitions[entityName]
+		const entityDefinition = entityDefinitions[entityName];
 
-		if (entityDefinition == null) console.log('Cound not find entity ' + entityName)
+		if (entityDefinition == null) console.log('Cound not find entity ' + entityName);
 
 		// Generate primary key, if not already present
 		if (!fields.id)
-			fields.id = entityDefinition.Persister.uuidRandom()
+			fields.id = entityDefinition.Persister.uuidRandom();
 
 		// If this is a user ID
 		if (entityName == 'User')
-			this.setViewerUserId(fields.id.toString())
+			this.setViewerUserId(fields.id.toString());
 
-		this.recordChange(entityName, fields, false)
-		await this.executeTriggers(entityDefinition.TriggersForAdd, fields)
+		this.recordChange(entityName, fields, false);
+		await this.executeTriggers(entityDefinition.TriggersForAdd, fields);
 
-		await entityDefinition.Persister.add(entityName, fields, entityDefinition.EntityType)
+		await entityDefinition.Persister.add(entityName, fields, entityDefinition.EntityType);
 
-		this.invalidateLoaderCache(entityName, fields)
+		this.invalidateLoaderCache(entityName, fields);
 
-		return fields.id
+		return fields.id;
 	}
 
 	async update(entityName: string, fields: any): void {
 
-		const entityDefinition = entityDefinitions[entityName]
+		const entityDefinition = entityDefinitions[entityName];
 
-		if (entityDefinition == null) console.log('XXX Cound not find entity' + entityName) // Should that be recorded somewhere? Could be another
+		if (entityDefinition == null) console.log('XXX Cound not find entity' + entityName); // Should that be recorded somewhere? Could be another
 
-		let oldFields = null
+		let oldFields = null;
 		if (entityDefinition.TriggersForUpdateShouldRetrieveCurrentRecord) {
 			oldFields = this.getOneObject(entityName, {
 				id: fields.id
-			})
+			});
 		}
 
-		this.recordChange(entityName, fields, false)
-		await this.executeTriggers(entityDefinition.TriggersForUpdate, fields, oldFields)
+		this.recordChange(entityName, fields, false);
+		await this.executeTriggers(entityDefinition.TriggersForUpdate, fields, oldFields);
 
-		await entityDefinition.Persister.update(entityName, fields)
+		await entityDefinition.Persister.update(entityName, fields);
 
-		this.invalidateLoaderCache(entityName, fields)
+		this.invalidateLoaderCache(entityName, fields);
 	}
 
 	async remove(entityName: string, fields: any): void {
 
-		const entityDefinition = entityDefinitions[entityName]
+		const entityDefinition = entityDefinitions[entityName];
 
-		this.recordChange(entityName, fields, true)
-		await this.executeTriggers(entityDefinition.TriggersForRemove, fields)
+		this.recordChange(entityName, fields, true);
+		await this.executeTriggers(entityDefinition.TriggersForRemove, fields);
 
-		await entityDefinition.Persister.remove(entityName, fields)
+		await entityDefinition.Persister.remove(entityName, fields);
 
-		this.invalidateLoaderCache(entityName, fields)
+		this.invalidateLoaderCache(entityName, fields);
 	}
 
 	cursorForObjectInConnection(entityName: string, arr, obj) {
 
-		const entityDefinition = entityDefinitions[entityName]
+		const entityDefinition = entityDefinitions[entityName];
 
 		// IDs can be both strings and Uuid. Check that first, and convert to String
-		const obj_id = entityDefinition.Persister.uuidToString(obj.id)
+		const obj_id = entityDefinition.Persister.uuidToString(obj.id);
 
 		// Make sure that the object and its instance can be compared with ===
 		// assumed that the object has id field which is unique
 		for (let ix = 0; ix < arr.length; ix++) {
-			const arr_element_id = entityDefinition.Persister.uuidToString(arr[ix].id)
+			const arr_element_id = entityDefinition.Persister.uuidToString(arr[ix].id);
 
 			if (arr_element_id == obj_id) {
-				arr[ix] = obj
-				break
+				arr[ix] = obj;
+				break;
 			}
 		}
 
-		let cursor = cursorForObjectInConnection(arr, obj)
+		let cursor = cursorForObjectInConnection(arr, obj);
 		if (cursor == null)
 			log.log('error', 'Could not create cursor for object in connection for ' + entityName, {
 				obj,
 				arr
-			})
+			});
 
-		return cursor
+		return cursor;
 	}
 
 	static initializePersisters(runAsPartOfSetupDatabase: boolean, cb: Function): void {
 
-		console.log("🚀 Initializing persisters - start ...")
+		console.log("🚀 Initializing persisters - start ...");
 
 		// TODO x8000 This should be re-done to work properly with more than one persister
 		for (let persister of setPersisters)
 			persister.initialize(runAsPartOfSetupDatabase, () => {
 
-				console.log("🏆 Initializing Cassandra persister - success.")
-				cb()
+				console.log("🏆 Initializing Cassandra persister - success.");
+				cb();
 			})
 	}
 }
 
-ObjectManager.registerEntity('User', User)
+ObjectManager.registerEntity('User', User);
