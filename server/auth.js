@@ -5,12 +5,10 @@ import bodyParser from 'body-parser'
 import express from 'express'
 import jwt from 'jwt-simple'
 
-import authExtensions from '../configuration/server/authExtensions'
+import authExtensions from './authExtensions'
 import delayPromise from '../scripts/delayPromise'
-import getNewUser from '../configuration/graphql/model/getNewUser'
 import logServerRequest from './logServerRequest'
-import ObjectManager from '../graphql/ObjectManager'
-import {requestLoggerAuth} from '../configuration/server/requestLoggers'
+import {requestLoggerAuth} from './requestLoggers'
 import {validateEmail} from '../scripts/validation'
 
 

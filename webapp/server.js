@@ -5,7 +5,7 @@ import express from 'express'
 import logServerRequest from '../server/logServerRequest'
 import {version} from '../configuration/package'
 import renderOnServer from './renderOnServer'
-import {requestLoggerRenderOnServer} from '../configuration/server/requestLoggers'
+import {requestLoggerRenderOnServer} from '../server/requestLoggers'
 import i18n from './i18n-server';
 import i18nMiddleware from 'i18next-express-middleware';
 

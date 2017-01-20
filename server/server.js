@@ -11,12 +11,10 @@ import process from 'process'
 
 import auth from './auth' // Authentication server
 import getLocalIP from '../scripts/getLocalIP'
-import graphql from './graphQL' // GraphQL server
 import healthz from './healthz' // Health check endpoint server
 import log from './log'
-import ObjectManager from '../graphql/ObjectManager'
 import {name, version} from '../configuration/package'
-import serverExtensions from '../configuration/server/serverExtensions'
+import serverExtensions from './serverExtensions'
 import webapp from '../webapp/server' // Isomorphic React server
 
 

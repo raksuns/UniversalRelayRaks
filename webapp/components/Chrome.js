@@ -4,15 +4,14 @@
 import AppBar from 'material-ui/AppBar';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import React from 'react';
-import Relay from 'react-relay';
 import spacing from 'material-ui/styles/spacing';
 
 import AppNavDrawer from './AppNavDrawer';
-import ChromeHelmet from '../../configuration/webapp/components/ChromeHelmet';
-import ChromeRightIcon from '../../configuration/webapp/components/ChromeRightIcon';
-import Footer from '../../configuration/webapp/components/Footer';
-import {MainScreenTitle} from '../../configuration/webapp/components/ChromeSettings';
-import muiTheme from '../../configuration/webapp/muiTheme';
+import ChromeHelmet from './ChromeHelmet';
+import ChromeRightIcon from './ChromeRightIcon';
+import Footer from './Footer';
+import {MainScreenTitle} from './ChromeSettings';
+import muiTheme from '../mui-themes';
 import withWidth, {LARGE, MEDIUM} from '../scripts/withWidth';
 
 
@@ -151,15 +150,4 @@ Chrome.childContextTypes = {
 //
 
 // It is important to retrieve UserToken2, since it is used in client.js
-export default Relay.createContainer(withWidth()(Chrome), {
-	fragments: {
-		Viewer: () => Relay.QL `
-    	fragment on Viewer {
-    		User_IsAnonymous,
-			UserToken2,
-			${ ChromeRightIcon.getFragment('Viewer') },
-			${ AppNavDrawer.getFragment('Viewer') },
-			${ Footer.getFragment('Viewer') },
-		}`,
-	},
-})
+export default withWidth()(Chrome);

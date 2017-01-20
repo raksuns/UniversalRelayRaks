@@ -4,10 +4,9 @@
 import Drawer from 'material-ui/Drawer'
 import {spacing, typography, zIndex} from 'material-ui/styles'
 import React from 'react'
-import Relay from 'react-relay'
 
-import {NavMenuTitle} from '../../configuration/webapp/components/ChromeSettings'
-import NavMenu from '../../configuration/webapp/components/NavMenu'
+import {NavMenuTitle} from './ChromeSettings'
+import NavMenu from './NavMenu'
 
 class AppNavDrawer extends React.Component {
 	_handle_onTouchTap_Drawer = () => {
@@ -60,12 +59,4 @@ AppNavDrawer.contextTypes = {
 	router: React.PropTypes.object.isRequired
 };
 
-export default Relay.createContainer(AppNavDrawer, {
-	fragments: {
-		Viewer: () => Relay.QL `
-      		fragment on Viewer {
-        		${ NavMenu.getFragment('Viewer') },
-      		}
-    	`,
-	},
-});
+export default AppNavDrawer;

@@ -10,10 +10,10 @@ import RelayLocalSchema from 'relay-local-schema'
 import {match} from 'react-router'
 
 import {getUserByCookie, serveAuthenticationFailed} from '../server/checkCredentials.js'
-import isomorphicVars from '../configuration/webapp/scripts/isomorphicVars'
+import isomorphicVars from '../configuration/isomorphicVars'
 import log from '../server/log'
 import ObjectManager from '../graphql/ObjectManager'
-import routes from '../configuration/webapp/routes'
+import routes from '../configuration/routes'
 import schema from '../graphql/schema' // Schema for GraphQL server
 import injectTapEventPlugin from 'react-tap-event-plugin';
 
