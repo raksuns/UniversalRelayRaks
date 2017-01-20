@@ -9,12 +9,7 @@ import compression from 'compression'
 import path from 'path'
 import process from 'process'
 
-import auth from './auth' // Authentication server
-import getLocalIP from '../scripts/getLocalIP'
-import healthz from './healthz' // Health check endpoint server
-import log from './log'
 import {name, version} from '../configuration/package'
-import serverExtensions from './serverExtensions'
 import webapp from '../webapp/server' // Isomorphic React server
 
 
@@ -63,14 +58,10 @@ router.set('x-powered-by', false);
 router.use(compression());
 router.use(cookieParser());
 
-// GraphQL server
-router.use('/graphql', graphql);
-
 // Authentication server
 router.use('/auth', auth);
 
 // Health check endpoint
-router.use('/healthz', healthz);
 
 // Static assets server
 let oneYear = 365 * 86400000;
